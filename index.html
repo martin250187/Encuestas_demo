@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <link
+      rel="shortcut icon"
+      type="image/x-icon"
+      href="./assets/img/MapGeo GIS-logo-sinFondo.png"
+    />
+    <title>DEMO PASO 2021</title>
+  </head>
+  <!--CSS-->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+  <link rel="stylesheet" href="./css/normalize.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="./css/easy-button.css" />
+  <link rel="stylesheet" href="./css/leaflet.legend.css" />
+  <link rel="stylesheet" href="./css/style.css" />
+  <!--JS-->
+  <script src="./js/leaflet.js"></script>
+  <script src="./js/chart.js"></script>
+  <script src="./js/easy-button.js"></script>
+  <script src="./js/leaflet.legend.js"></script>
+
+   <!--Script Draw Tools-->
+   <link rel="stylesheet" href="./app/Leaflet.draw-develop/src/leaflet.draw.css">
+   <script src="./app/Leaflet.draw-develop/src/Leaflet.draw.js"></script>
+   <script src="./app/Leaflet.draw-develop/src/Leaflet.Draw.Event.js"></script>
+
+   <script src="./app/Leaflet.draw-develop/src/Toolbar.js"></script>
+   <script src="./app/Leaflet.draw-develop/src/Tooltip.js"></script>
+
+   <script src="./app/Leaflet.draw-develop/src/ext/GeometryUtil.js"></script>
+   <script src="./app/Leaflet.draw-develop/src/ext/LatLngUtil.js"></script>
+   <script src="./app/Leaflet.draw-develop/src/ext/LineUtil.Intersect.js"></script>
+   <script src="./app/Leaflet.draw-develop/src/ext/Polygon.Intersect.js"></script>
+   <script src="./app/Leaflet.draw-develop/src/ext/Polyline.Intersect.js"></script>
+   <script src="./app/Leaflet.draw-develop/src/ext/TouchEvents.js"></script>
+
+   <script src="./app/Leaflet.draw-develop/src/draw/DrawToolbar.js"></script>
+   <script src="./app/Leaflet.draw-develop/src/draw/handler/Draw.Feature.js"></script>
+   <script src="./app/Leaflet.draw-develop/src/draw/handler/Draw.SimpleShape.js"></script>
+   <script src="./app/Leaflet.draw-develop/src/draw/handler/Draw.Polyline.js"></script>
+   <script src="./app/Leaflet.draw-develop/src/draw/handler/Draw.Marker.js"></script>
+   <script src="./app/Leaflet.draw-develop/src/draw/handler/Draw.Circle.js"></script>
+   <script src="./app/Leaflet.draw-develop/src/draw/handler/Draw.CircleMarker.js"></script>
+   <script src="./app/Leaflet.draw-develop/src/draw/handler/Draw.Polygon.js"></script>
+   <script src="./app/Leaflet.draw-develop/src/draw/handler/Draw.Rectangle.js"></script>
+
+   <script src="./app/Leaflet.draw-develop/src/edit/EditToolbar.js"></script>
+   <script src="./app/Leaflet.draw-develop/src/edit/handler/EditToolbar.Edit.js"></script>
+   <script src="./app/Leaflet.draw-develop/src/edit/handler/EditToolbar.Delete.js"></script>
+
+   <script src="./app/Leaflet.draw-develop/src/Control.Draw.js"></script>
+
+   <script src="./app/Leaflet.draw-develop/src/edit/handler/Edit.Poly.js"></script>
+   <script src="./app/Leaflet.draw-develop/src/edit/handler/Edit.SimpleShape.js"></script>
+   <script src="./app/Leaflet.draw-develop/src/edit/handler/Edit.Rectangle.js"></script>
+   <script src="./app/Leaflet.draw-develop/src/edit/handler/Edit.Marker.js"></script>
+   <script src="./app/Leaflet.draw-develop/src/edit/handler/Edit.CircleMarker.js"></script>
+   <script src="./app/Leaflet.draw-develop/src/edit/handler/Edit.Circle.js"></script>
+
+   <!--Turf Tools-->
+   <script src="https://cdn.jsdelivr.net/npm/@turf/turf@6/turf.min.js"></script>
+   <!--Plugin Leaflet.PointInPolygon-->
+   <script src="https://cdn.rawgit.com/hayeswise/Leaflet.PointInPolygon/v1.0.0/wise-leaflet-pip.js"></script>
+
+  <body>
+    <div id="map"></div>
+    <div class="container">
+    <div class="total">
+      <canvas id="myChart"></canvas>
+      <div class="textContainer">
+        <span id="establecimientos">Establecimientos totales: </span>
+        <hr />
+        <span id="votantes">Votantes totales: </span>
+        <hr />
+        <span id="mesas">Mesas totales: </span>
+        <hr />
+      </div>
+    </div>
+    <div class="filterSelect" style="display: none">
+      <canvas id="myChartFilter"></canvas>
+      <div class="textContainerFilter">
+        <h4 id="establecimientosF"></h4>
+        <hr />
+        <span id="ganadorF"></span>
+        <hr />
+        <span id="votantesF"></span>
+        <hr />
+        <span id="mesasF"></span>
+        <hr />
+      </div>
+    </div>
+    <div class="filterDraw" style="display: none">
+      <canvas id="myChartFilterDraw"></canvas>
+      <div class="textContainerFilter">
+        <span id="establecimientosFD"></span>
+        <hr />
+        <span id="ganadorFD"></span>
+        <hr />
+        <span id="votantesFD"></span>
+        <hr />
+        <span id="mesasFD"></span>
+        <hr />
+      </div>
+    </div>
+    <div class="imgContainer">
+      <a href="https://mapgeogis.com"><img src="./assets/img/MapGeo GIS-logo.png" alt="" srcset="" /></a>
+    </div>
+  </div>
+    <script src="./data/establecimientos_resultados.js"></script>
+    <script src="./chartsFilterSelect.js"></script>
+    <script src="./charts.js"></script>
+    <script src="./main.js"></script>
+    <script src="./drawFilter.js"></script>
+    <script src="./chartsFilterDraw.js"></script>
+  </body>
+</html>
